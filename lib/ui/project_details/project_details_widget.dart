@@ -1,13 +1,15 @@
-
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test/bloc/project_bloc.dart';
 import 'package:test/ui/add_transaction/add_transaction_widget.dart';
 import 'package:test/ui/flutter_flow/flutter_flow_theme.dart';
+import 'package:test/utils/utils.dart';
 
 class ProjectDetailsWidget extends StatefulWidget {
-  ProjectDetailsWidget({Key key}) : super(key: key);
+  int id;
+
+  ProjectDetailsWidget(this.id, {Key key}) : super(key: key);
 
   @override
   _ProjectDetailsWidgetState createState() => _ProjectDetailsWidgetState();
@@ -15,6 +17,21 @@ class ProjectDetailsWidget extends StatefulWidget {
 
 class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  ProjectBloc projectBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    projectBloc = new ProjectBloc(context);
+
+    projectBloc.onDeleteLoader.listen((isLoading) {
+      if (isLoading) {
+        Utils.showLoader(context);
+        Navigator.pop(context);
+      } else
+        Utils.hideLoader();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +49,21 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
             fontSize: 20,
           ),
         ),
-        actions: [],
+        actions: [
+          IconButton(
+            onPressed: () {
+              projectPopup(context, widget.id);
+              //  Utils.showLoader(context);
+              // projectBloc.requestCreateProject(textController.text.toString(),_imageFile);
+            },
+            icon: Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 30,
+            ),
+            iconSize: 30,
+          )
+        ],
         centerTitle: true,
         elevation: 4,
       ),
@@ -105,8 +136,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                         child: Text(
                                           'ايداع',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2
-                                              .override(
+                                          style: FlutterFlowTheme.bodyText2.override(
                                             fontFamily: 'Poppins',
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -154,8 +184,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                         child: Text(
                                           'سحب',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2
-                                              .override(
+                                          style: FlutterFlowTheme.bodyText2.override(
                                             fontFamily: 'Poppins',
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -203,8 +232,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                         child: Text(
                                           'نقل',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2
-                                              .override(
+                                          style: FlutterFlowTheme.bodyText2.override(
                                             fontFamily: 'Poppins',
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -280,8 +308,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                         child: Text(
                                           'طارق',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2
-                                              .override(
+                                          style: FlutterFlowTheme.bodyText2.override(
                                             fontFamily: 'Poppins',
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -329,8 +356,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                         child: Text(
                                           'حيدر',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2
-                                              .override(
+                                          style: FlutterFlowTheme.bodyText2.override(
                                             fontFamily: 'Poppins',
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -425,8 +451,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       child: Align(
                                         alignment: Alignment(0.7, 0),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                                           child: Text(
                                             '2021-03-11',
                                             textAlign: TextAlign.end,
@@ -444,8 +469,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Text(
                                           '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -457,13 +481,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 5),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
                                             child: Text(
                                               'سحب',
                                               textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -527,8 +549,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Text(
                                           '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -554,13 +575,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 5),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
                                             child: Text(
                                               'ايداع',
                                               textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -639,8 +658,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Text(
                                           '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -666,13 +684,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 5),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
                                             child: Text(
                                               'سحب',
                                               textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -736,8 +752,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Text(
                                           '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -763,13 +778,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 5),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
                                             child: Text(
                                               'ايداع',
                                               textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -794,6 +807,40 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           ],
         ),
       ),
+    );
+  }
+
+  projectPopup(BuildContext context, int addressId) {
+    return showDialog(
+      context: context,
+      //barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Are you sure to delete this project",
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "No",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Yes",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Utils.showLoader(context);
+                 projectBloc.deleteProjectRequest(addressId);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

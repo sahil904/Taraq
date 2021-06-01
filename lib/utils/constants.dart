@@ -10,18 +10,6 @@ class KGlobal {
   static const RECEIVE_TIMEOUT = 30000;
 }
 
-class KPrefs {
-  //Pref Constants
-  static const TOKEN = 'token';
-  static const IS_LOGGED_IN = 'is_logged_in';
-  static const APP_NAME = 'Quit Experts';
-
-  static const USER_ID = 'user_id';
-  static const USER_EMAIL = 'user_email';
-  static const USER_NAME = 'user_name';
-  static const FCM_TOKEN = 'fcm_token';
-}
-
 class KReqHeaders {
   static const AUTHORIZATION = 'Token';
   static const DEVICE_TYPE = 'device_type';
@@ -33,11 +21,24 @@ class KApiResponseCodes {
 }
 
 class KApiBase {
-  static const BASE_URL = 'https://taraqapp.herokuapp.com/api/auth/';
+  static const BASE_URL = 'https://taraqapp.herokuapp.com/api/';
 }
 
 class KApiEndPoints {
-  static const API_LOGIN = 'login';
+  static const API_LOGIN = 'auth/login';
+  static const API_OPERATION_LIST = 'operation';
+  static const API_OPERATION_CREATE = 'operation_add';
+  static const API_OPERATION_UPDATE = 'operation_update';
+  static const API_OPERATION_DELETE = 'operation_delete';
+
+  static const API_CLIENT_LIST = 'client';
+  static const API_DELETE_LIST = 'client_delete';
+  static const API_CREATE_CLIENT = 'client_add';
+  static const API_CLIENT_UPDATE = 'client_update';
+
+  static const API_PROJECT_LIST = 'project';
+  static const API_PROJECT_CREATE = 'project_add';
+  static const API_PROJECT_DELETE = 'project_delet';
 }
 
 class KDateFormats {

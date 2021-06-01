@@ -249,7 +249,7 @@ class Utils {
 
   Widget noItemInCartList() {
     return Container(
-      color: AppColors.white,
+      color: AppColors.white1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

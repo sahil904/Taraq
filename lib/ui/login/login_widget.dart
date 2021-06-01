@@ -1,4 +1,5 @@
 import 'package:test/bloc/login_bloc.dart';
+import 'package:test/utils/pref_utils.dart';
 import 'package:test/utils/utils.dart';
 import 'package:test/utils/validation_utils.dart';
 
@@ -42,7 +43,14 @@ class _LoginWidgetState extends State<LoginWidget> {
     passWordController.addListener(_checkInputValidations);
 
     _loginBloc.onLoginSuccess.listen((event) {
-      if (event!=null) {
+      _loginBloc.isLoading.listen((isLoading) {
+        isLoading ? Utils.showLoader(context) : Utils.hideLoader();
+      });
+      if (event.accessToken!=null) {
+        PrefUtils.setUserToken(event.user.id.toString());
+        //PrefUtils.setUserAccessKey(data.accesskey);
+        PrefUtils.setDevicesId(event.accessToken);
+        print("userIdNewProducts " + PrefUtils.getUserToken());
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -105,6 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               child: TextFormField(
                                 controller: userNameController,
                                 obscureText: false,
+                                keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   hintText: 'اسم ‏المستخدم',
                                   hintStyle: GoogleFonts.getFont(
@@ -276,6 +285,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void _onContinueButtonClicked() {
     if (canProceed) {
+      Utils.showLoader(context);
       _loginBloc.loginRequest(
           userNameController.text.toString().trim(), passWordController.text.toString().trim());
     } else {

@@ -1,10 +1,19 @@
+import 'package:test/bloc/client_bloc.dart';
+import 'package:test/bloc/operation_bloc.dart';
+import 'package:test/custom_views/route_animations.dart';
+import 'package:test/ui/clients/clients_widget.dart';
+import 'package:test/utils/utils.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class EditPageWidget extends StatefulWidget {
-  EditPageWidget({Key key}) : super(key: key);
+  final String clientName;
+  final String typeAdd;
+  final int clientId;
+
+  EditPageWidget({this.clientName, this.clientId, this.typeAdd});
 
   @override
   _EditPageWidgetState createState() => _EditPageWidgetState();
@@ -13,11 +22,35 @@ class EditPageWidget extends StatefulWidget {
 class _EditPageWidgetState extends State<EditPageWidget> {
   TextEditingController textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  ClientBloc _clientBloc;
+  OperationBloc _operationBloc;
 
   @override
   void initState() {
     super.initState();
+    _clientBloc = new ClientBloc(context);
+    _operationBloc = new OperationBloc(context);
+    initobersers();
     textController = TextEditingController();
+    if (widget.clientName != null) textController.text = widget.clientName.toString();
+  }
+
+  void initobersers() {
+    if (widget.typeAdd != "Opertional") {
+      _clientBloc.onClientAddSuccess.listen((event) {
+        if (event.status) {
+          Utils.hideLoader();
+          Navigator.pop(context);
+        }
+      });
+    }
+    else
+      _operationBloc.onOperationAddSuccess.listen((event) {
+        if (event.status) {
+          Utils.hideLoader();
+          Navigator.pop(context);
+        }
+      });
   }
 
   @override
@@ -42,6 +75,13 @@ class _EditPageWidgetState extends State<EditPageWidget> {
           IconButton(
             onPressed: () {
               print('IconButton pressed ...');
+              Utils.showLoader(context);
+              if (widget.typeAdd != "Opertional")
+                _clientBloc.updateClientDetails(
+                    textController.text.toString().trim(), widget.clientId);
+              else
+                _operationBloc.updateOperationDetails(
+                    textController.text.toString().trim(), widget.clientId);
             },
             icon: Icon(
               Icons.done,

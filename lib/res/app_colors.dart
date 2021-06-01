@@ -5,7 +5,7 @@ class AppColors extends MaterialColor {
 
   static const int primaryColorValue = 0xFF102733;
 
-  static const primaryColor = Color(0xFF102733);
+  static const primaryColor = Color(0xffe53e3f);
   static const primaryColor10 = Color(0xFF15303E);
   static const primaryColor11= Color(0xFF1133343);
 
@@ -18,6 +18,7 @@ class AppColors extends MaterialColor {
 
   //White shades
   static const white = Color(0xFFFFFFFF);
+  static const white1 = Color(0xFFDBE2E7);
   static const lightWhite = Color(0xFF97AABD);
   static const white27 = Color(0x45FFFFFF);
   static const white30 = Color(0x4DFFFFFF);

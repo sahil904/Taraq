@@ -1,3 +1,7 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test/ui/common/transparent_inkwell.dart';
+import 'package:test/ui/login/login_widget.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +26,11 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFDBE2E7),
+      appBar: AppBar(
+        actions: [TransparentInkWell(onTap: () {
+         logout();
+        }, child: Icon(Icons.logout))],
+      ),
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -58,25 +67,21 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           Expanded(
                                             child: Text(
                                               'السحب الكلي',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                           ),
                                           Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
+                                            clipBehavior: Clip.antiAliasWithSaveLayer,
                                             color: Color(0x734B39EF),
                                             child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  2, 2, 2, 2),
+                                              padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
                                               child: Text(
                                                 '^ 25%',
                                                 style: TextStyle(
-                                                  color: FlutterFlowTheme
-                                                      .primaryColor,
+                                                  color: FlutterFlowTheme.primaryColor,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 10,
                                                 ),
@@ -90,15 +95,12 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(8, 0, 0, 8),
+                                          padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                                           child: Text(
                                             '\$3,205.02',
-                                            style: FlutterFlowTheme.title2
-                                                .override(
+                                            style: FlutterFlowTheme.title2.override(
                                               fontFamily: 'Poppins',
-                                              color:
-                                                  FlutterFlowTheme.primaryColor,
+                                              color: FlutterFlowTheme.primaryColor,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -131,20 +133,17 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           Expanded(
                                             child: Text(
                                               'ايداع الكل',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                           ),
                                           Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
+                                            clipBehavior: Clip.antiAliasWithSaveLayer,
                                             color: Color(0x4D3BC821),
                                             child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  2, 2, 2, 2),
+                                              padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
                                               child: Text(
                                                 '^ 25%',
                                                 style: TextStyle(
@@ -162,12 +161,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(8, 0, 0, 8),
+                                          padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                                           child: Text(
                                             '\$3,205.02',
-                                            style: FlutterFlowTheme.title2
-                                                .override(
+                                            style: FlutterFlowTheme.title2.override(
                                               fontFamily: 'Poppins',
                                               color: Color(0xFF3BC821),
                                               fontWeight: FontWeight.w500,
@@ -246,8 +243,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Text(
                                           '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -273,12 +269,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                             child: Text(
                                               'مشورعي1',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 12,
                                               ),
@@ -341,8 +335,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Text(
                                           '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -368,12 +361,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                             child: Text(
                                               'مشروعي2',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 12,
                                               ),
@@ -451,8 +442,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Text(
                                           '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -478,12 +468,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                             child: Text(
                                               'مشروعي 1',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 12,
                                               ),
@@ -546,8 +534,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Text(
                                           '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1
-                                              .override(
+                                          style: FlutterFlowTheme.subtitle1.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF15212B),
                                           ),
@@ -573,12 +560,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                             child: Text(
                                               'مشروعي 2',
-                                              style: FlutterFlowTheme.bodyText2
-                                                  .override(
+                                              style: FlutterFlowTheme.bodyText2.override(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 12,
                                               ),
@@ -603,5 +588,17 @@ class _DashboardWidgetState extends State<DashboardWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> logout() async {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginWidget(),
+      ),
+          (r) => false,
+    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

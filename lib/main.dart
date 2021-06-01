@@ -8,17 +8,17 @@ import 'package:test/ui/login/login_widget.dart';
 import 'package:test/ui/operations/operations_widget.dart';
 import 'package:test/ui/projects/projects_widget.dart';
 import 'package:test/utils/log.dart';
+import 'package:test/utils/pref_utils.dart';
 
 import 'res/app_colors.dart';
+import 'ui/splash_page.dart';
 import 'utils/shared_preferences.dart';
-
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
@@ -40,16 +40,18 @@ class _MyAppState extends State<MyApp> {
     ]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.white,
-        statusBarColor: AppColors.primaryColor,
+        systemNavigationBarColor: AppColors.colorTransparent,
+        statusBarColor: AppColors.colorTransparent,
         statusBarIconBrightness: Brightness.light));
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'test',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginWidget(),
+      home: SplashPage(),
     );
   }
 }

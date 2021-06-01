@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:test/model/error_response.dart';
+import 'package:test/repositry/client_repository.dart';
 import 'package:test/repositry/login_repository.dart';
+import 'package:test/repositry/operation_repository.dart';
+import 'package:test/repositry/project_repository.dart';
 
 import 'package:test/res/strings.dart';
 import 'package:test/utils/constants.dart';
@@ -30,8 +33,6 @@ class APIController {
 
   Dio _dio;
 
-  /* App wide general request.
-   * For setting up custom request use the prepareCustomRequest() method. */
   void _prepareRequest() {
     final BaseOptions dioOptions = BaseOptions(
       connectTimeout: KGlobal.CONNECT_TIMEOUT,
@@ -39,16 +40,41 @@ class APIController {
     )
       ..baseUrl = baseUrl
       ..contentType = Headers.jsonContentType
-    //setting custom headers
-    //sending device type in every request
-      ..headers[KReqHeaders.AUTHORIZATION] = Platform.operatingSystem.toUpperCase();
+      ..headers[KReqHeaders.PLATFORM] = Platform.operatingSystem.toUpperCase();
 
-    if (Utils.isNotEmpty(PrefUtils.getUserToken()))
-      dioOptions.headers[KReqHeaders.AUTHORIZATION.toUpperCase()] = PrefUtils.getDevicesId();
-    debugPrint('getDevicesId -> ' + PrefUtils.getDevicesId());
+    if (Utils.isNotEmpty(PrefUtils.getDevicesId()))
+      dioOptions.headers[KReqHeaders.AUTHORIZATION] = PrefUtils.getDevicesId();
+    debugPrint('TOKEN -> ' + PrefUtils.getDevicesId());
 
     _dio = Dio(dioOptions);
-    _dio.interceptors.add(LogInterceptor(responseBody: true));
+    _dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+      // Do something before request is sent
+      options.headers["Authorization"] = "Bearer " + PrefUtils.getDevicesId();
+      return options;
+    }, onResponse: (Response response) {
+      // Do something with response data
+      return response; // continue
+    }, onError: (DioError error) async {
+      // Do something with response error
+      if (error.response?.statusCode == 403) {
+        _dio.interceptors.requestLock.lock();
+        _dio.interceptors.responseLock.lock();
+        RequestOptions options = error.response.request;
+        // FirebaseUser user = await FirebaseAuth.instance.currentUser();
+        //token = await user.getIdToken(refresh: true);
+        //await writeAuthKey(token);
+        options.headers["Authorization"] = "Bearer " + PrefUtils.getDevicesId();
+
+        _dio.interceptors.requestLock.unlock();
+        _dio.interceptors.responseLock.unlock();
+        return _dio.request(options.path, options: options);
+      } else {
+        return error;
+      }
+    }));
+    _dio.interceptors.add(
+      LogInterceptor(responseBody: true),
+    );
   }
 
   /* More customisable than prepareRequest() method.
@@ -57,8 +83,7 @@ class APIController {
   void _prepareCustomRequest(ContentType contentType, String baseUrl,
       Map<String, dynamic> customHeaders, bool isAuthorised) {
     //Sending these headers in every case.
-    customHeaders.putIfAbsent(
-        KReqHeaders.DEVICE_TYPE, () => Platform.operatingSystem);
+    customHeaders.putIfAbsent(KReqHeaders.DEVICE_TYPE, () => Platform.operatingSystem);
     /*customHeaders.putIfAbsent(
         KReqHeaders.APP_VERSION, () async => await KGlobal.APP_VERSION);*/
 
@@ -69,18 +94,13 @@ class APIController {
       ..baseUrl = baseUrl
       ..contentType = Headers.jsonContentType
       ..headers = customHeaders;
-    // if (isAuthorised && Utils.isNotEmpty(Prefs.prefs.getString(KPrefs.TOKEN)))
-    //   dioOptions.headers[KReqHeaders.DTYPE] = Prefs.prefs.getString(KPrefs.TOKEN);
-
-    if (Utils.isNotEmpty(PrefUtils.getUserToken()))
-      dioOptions.headers[KReqHeaders.AUTHORIZATION.toUpperCase()] = PrefUtils.getDevicesId();
-    debugPrint('getDevicesId -> ' + PrefUtils.getDevicesId());
+    if (isAuthorised && Utils.isNotEmpty(PrefUtils.getDevicesId()))
+      dioOptions.headers[KReqHeaders.AUTHORIZATION] = PrefUtils.getDevicesId();
 
     _dio = Dio(dioOptions);
     // Add your own interceptors if you want to do something different from the regular flow.
     _addInterceptors();
   }
-
 
   /* Adding interceptors on requests and response to log them in console and
    * better handle successes and errors. */
@@ -161,6 +181,180 @@ class APIController {
       return _repository.onSuccess(KApiEndPoints.API_LOGIN, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_LOGIN, _handleError(e));
+    }
+  }
+
+  Future<dynamic> clientListRequest(
+    ClientRepository _repository,
+  ) async {
+    try {
+      final Response response = await _dio.get(
+        KApiEndPoints.API_CLIENT_LIST,
+      );
+      return _repository.onSuccess(
+        KApiEndPoints.API_CLIENT_LIST,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_CLIENT_LIST, _handleError(e));
+    }
+  }
+
+  Future<dynamic> deleteClientListRequest(ClientRepository _repository, int clientId) async {
+    final String url = '${KApiEndPoints.API_CLIENT_LIST}/$clientId';
+    try {
+      final Response response = await _dio.delete(
+        url,
+      );
+      return _repository.onSuccess(
+        KApiEndPoints.API_DELETE_LIST,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_DELETE_LIST, _handleError(e));
+    }
+  }
+
+  Future<dynamic> requestCreateClient(ClientRepository _repository, String name) async {
+    // final String url = '${KApiEndPoints.API_CLIENT_LIST}/$name';
+
+    FormData formData = new FormData.fromMap({'client_name': name});
+    try {
+      final Response response = await _dio.post(KApiEndPoints.API_CLIENT_LIST, data: formData);
+      return _repository.onSuccess(
+        KApiEndPoints.API_CREATE_CLIENT,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_CREATE_CLIENT, _handleError(e));
+    }
+  }
+
+  Future<dynamic> updateClientDetails(
+      ClientRepository _repository, int clientId, String name) async {
+    final String url = '${KApiEndPoints.API_CLIENT_LIST}/$clientId';
+    FormData formData = new FormData.fromMap({'client_name': name});
+
+    try {
+      final Response response = await _dio.post(url, data: formData);
+      return _repository.onSuccess(KApiEndPoints.API_CLIENT_UPDATE, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_CLIENT_UPDATE, _handleError(e));
+    }
+  }
+
+  Future<dynamic> deleteOperationRequest(OperationRepository _repository, int clientId) async {
+    final String url = '${KApiEndPoints.API_OPERATION_LIST}/$clientId';
+    try {
+      final Response response = await _dio.delete(
+        url,
+      );
+      return _repository.onSuccess(
+        KApiEndPoints.API_OPERATION_DELETE,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_OPERATION_DELETE, _handleError(e));
+    }
+  }
+
+  Future<dynamic> requestCreateOperation(OperationRepository _repository, String name) async {
+    // final String url = '${KApiEndPoints.API_CLIENT_LIST}/$name';
+
+    FormData formData = new FormData.fromMap({'operation_name': name});
+    try {
+      final Response response = await _dio.post(KApiEndPoints.API_OPERATION_LIST, data: formData);
+      return _repository.onSuccess(
+        KApiEndPoints.API_OPERATION_CREATE,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_OPERATION_CREATE, _handleError(e));
+    }
+  }
+
+  Future<dynamic> updateOperationDetails(
+      OperationRepository _repository, int clientId, String name) async {
+    final String url = '${KApiEndPoints.API_OPERATION_LIST}/$clientId';
+    FormData formData = new FormData.fromMap({'operation_name': name});
+
+    try {
+      final Response response = await _dio.post(url, data: formData);
+      return _repository.onSuccess(KApiEndPoints.API_OPERATION_UPDATE, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_OPERATION_UPDATE, _handleError(e));
+    }
+  }
+
+  Future<dynamic> operationListRequest(
+    OperationRepository _repository,
+  ) async {
+    try {
+      final Response response = await _dio.get(
+        KApiEndPoints.API_OPERATION_LIST,
+
+        //HttpHeaders.authorizationHeader: "Bearer $token"
+      );
+      return _repository.onSuccess(
+        KApiEndPoints.API_OPERATION_LIST,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_OPERATION_LIST, _handleError(e));
+    }
+  }
+
+  Future<dynamic> projectListRequest(
+    ProjectRepository _repository,
+  ) async {
+    try {
+      final Response response = await _dio.get(
+        KApiEndPoints.API_PROJECT_LIST,
+
+        //HttpHeaders.authorizationHeader: "Bearer $token"
+      );
+      return _repository.onSuccess(
+        KApiEndPoints.API_PROJECT_LIST,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_PROJECT_LIST, _handleError(e));
+    }
+  }
+
+  Future<dynamic> requestCreateProject(ProjectRepository _repository, String name, File photo) async {
+    final String url = '${KApiEndPoints.API_PROJECT_LIST}';
+    String fileName;
+    if (photo != null) {
+      fileName = photo.path.split('/').last;
+    }
+    FormData formData = new FormData.fromMap(
+      {
+        'project_name': name,
+        'image': photo == null ? "" : await MultipartFile.fromFile(photo.path, filename: fileName),
+      },
+    );
+    try {
+      final Response response = await _dio.post(url, data: formData);
+      return _repository.onSuccess(
+        KApiEndPoints.API_PROJECT_CREATE,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_PROJECT_CREATE, _handleError(e));
+    }
+  }
+  Future<dynamic> deleteProjectRequest(ProjectRepository _repository, int id )
+  async {
+    final String url = '${KApiEndPoints.API_PROJECT_LIST}/$id';
+    try {
+      final Response response = await _dio.delete(url, );
+      return _repository.onSuccess(
+        KApiEndPoints.API_PROJECT_DELETE,
+        response,
+      );
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_PROJECT_DELETE, _handleError(e));
     }
   }
 }
