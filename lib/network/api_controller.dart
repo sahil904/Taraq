@@ -264,10 +264,7 @@ class APIController {
     FormData formData = new FormData.fromMap({'operation_name': name});
     try {
       final Response response = await _dio.post(KApiEndPoints.API_OPERATION_LIST, data: formData);
-      return _repository.onSuccess(
-        KApiEndPoints.API_OPERATION_CREATE,
-        response,
-      );
+      return _repository.onSuccess(KApiEndPoints.API_OPERATION_CREATE, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_OPERATION_CREATE, _handleError(e));
     }
@@ -295,10 +292,7 @@ class APIController {
 
         //HttpHeaders.authorizationHeader: "Bearer $token"
       );
-      return _repository.onSuccess(
-        KApiEndPoints.API_OPERATION_LIST,
-        response,
-      );
+      return _repository.onSuccess(KApiEndPoints.API_OPERATION_LIST, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_OPERATION_LIST, _handleError(e));
     }
@@ -313,16 +307,14 @@ class APIController {
 
         //HttpHeaders.authorizationHeader: "Bearer $token"
       );
-      return _repository.onSuccess(
-        KApiEndPoints.API_PROJECT_LIST,
-        response,
-      );
+      return _repository.onSuccess(KApiEndPoints.API_PROJECT_LIST, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_PROJECT_LIST, _handleError(e));
     }
   }
 
-  Future<dynamic> requestCreateProject(ProjectRepository _repository, String name, File photo) async {
+  Future<dynamic> requestCreateProject(
+      ProjectRepository _repository, String name, File photo) async {
     final String url = '${KApiEndPoints.API_PROJECT_LIST}';
     String fileName;
     if (photo != null) {
@@ -336,23 +328,17 @@ class APIController {
     );
     try {
       final Response response = await _dio.post(url, data: formData);
-      return _repository.onSuccess(
-        KApiEndPoints.API_PROJECT_CREATE,
-        response,
-      );
+      return _repository.onSuccess(KApiEndPoints.API_PROJECT_CREATE, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_PROJECT_CREATE, _handleError(e));
     }
   }
-  Future<dynamic> deleteProjectRequest(ProjectRepository _repository, int id )
-  async {
+
+  Future<dynamic> deleteProjectRequest(ProjectRepository _repository, int id) async {
     final String url = '${KApiEndPoints.API_PROJECT_LIST}/$id';
     try {
-      final Response response = await _dio.delete(url, );
-      return _repository.onSuccess(
-        KApiEndPoints.API_PROJECT_DELETE,
-        response,
-      );
+      final Response response = await _dio.delete(url);
+      return _repository.onSuccess(KApiEndPoints.API_PROJECT_DELETE, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_PROJECT_DELETE, _handleError(e));
     }

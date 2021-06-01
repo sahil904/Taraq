@@ -65,7 +65,7 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
 
   streamWidget() {
     return StreamBuilder<List<DataProject>>(
-      stream: _projectBloc.onClientListSuccess,
+      stream: _projectBloc.onProjectListSuccess,
       builder: (context, snapshot) {
         if (snapshot.hasError) return Utils().somethingWentWrong();
         if (snapshot.hasData) {
@@ -106,91 +106,87 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
   }
 
   operationList(DataProject list) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          height: 80,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.tertiaryColor,
-            border: Border.all(
-              color: Color(0xFFC8CED5),
-              width: 1,
+    return Container(
+      width: double.infinity,
+      height: 80,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.tertiaryColor,
+        border: Border.all(
+          color: Color(0xFFC8CED5),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: list.image,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                )
+              ],
             ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl: list.image,
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProjectDetailsWidget(list.id),
-                      ),
-                    ).whenComplete(() => initobersers());
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment(0, 0),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 0,
-                                height: 0,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                              ),
-                              Text(
-                                list.projectName,
-                                style: FlutterFlowTheme.title2.override(
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Color(0xFF95A1AC),
-                                  size: 18,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+          Expanded(
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectDetailsWidget(list.id),
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
+                ).whenComplete(() => initobersers());
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment(0, 0),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 0,
+                            height: 0,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                            ),
+                          ),
+                          Text(
+                            list.projectName,
+                            style: FlutterFlowTheme.title2.override(
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF95A1AC),
+                              size: 18,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

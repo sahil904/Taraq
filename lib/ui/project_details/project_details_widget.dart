@@ -24,8 +24,8 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
     super.initState();
     projectBloc = new ProjectBloc(context);
 
-    projectBloc.onDeleteLoader.listen((isLoading) {
-      if (isLoading) {
+    projectBloc.onProjectDeleteSuccess.listen((isLoading) {
+      if (isLoading.status) {
         Utils.showLoader(context);
         Navigator.pop(context);
       } else

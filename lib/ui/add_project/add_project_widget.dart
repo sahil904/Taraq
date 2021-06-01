@@ -27,7 +27,7 @@ class _AddProjectWidgetState extends State<AddProjectWidget> {
     super.initState();
     projectBloc=new ProjectBloc(context);
     textController = TextEditingController();
-    projectBloc.onClientAddSuccess.listen((event) {
+    projectBloc.onProjectAddSuccess.listen((event) {
       if (event.status) {
         Utils.hideLoader();
         Navigator.pop(context);

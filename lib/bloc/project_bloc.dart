@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:test/model/client_list_response.dart';
+import 'package:test/model/delete_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
 import 'package:test/repositry/project_repository.dart';
@@ -18,10 +19,12 @@ class ProjectBloc extends BaseBloc {
   final _deleteLoader = BehaviorSubject<bool>();
   final _onClientListSuccessBS = BehaviorSubject<List<DataProject>>();
   final _onClientAddSuccessBS = BehaviorSubject<ProjectAddResponse>();
+  final _onProjectDeleteSuccessBS = BehaviorSubject<DeletedResponse>();
 
-  Stream<List<DataProject>> get onClientListSuccess => _onClientListSuccessBS.stream;
+  Stream<List<DataProject>> get onProjectListSuccess => _onClientListSuccessBS.stream;
 
-  Stream<ProjectAddResponse> get onClientAddSuccess => _onClientAddSuccessBS.stream;
+  Stream<ProjectAddResponse> get onProjectAddSuccess => _onClientAddSuccessBS.stream;
+  Stream<DeletedResponse> get onProjectDeleteSuccess => _onProjectDeleteSuccessBS.stream;
 
   Stream<bool> get onDeleteLoader => _deleteLoader.stream;
 
@@ -43,11 +46,13 @@ class ProjectBloc extends BaseBloc {
     compositeSubscription
         .add(_projectRepository.deleteProjectRequest(addressId).listen((response) {
       _deleteLoader.add(false);
-      if (response is ClientListResponse) {
+      if (response is DeletedResponse) {
         //  updateAddressList(response.data, false);
-        final int index = addressList.indexWhere((element) => element.id == addressId);
-        addressList.removeAt(index);
-        _onClientListSuccessBS.add(addressList);
+     //   final int index = addressList.indexWhere((element) => element.id == addressId);
+       // addressList.removeAt(index);
+        _onProjectDeleteSuccessBS.add(response);
+      } else {
+        _onProjectDeleteSuccessBS.addError(response);
       }
     }));
   }

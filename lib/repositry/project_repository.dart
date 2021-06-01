@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test/base/base_repository.dart';
+import 'package:test/model/delete_response.dart';
 import 'package:test/model/error_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
@@ -37,10 +38,12 @@ class ProjectRepository extends BaseRepository {
     super.onSuccess(endPoint, response);
     switch (endPoint) {
       case KApiEndPoints.API_PROJECT_LIST:
-      case KApiEndPoints.API_PROJECT_DELETE:
+
         return ProjectListResponse.fromJson(response.data);
       case KApiEndPoints.API_PROJECT_CREATE:
         return ProjectAddResponse.fromJson(response.data);
+        case KApiEndPoints.API_PROJECT_CREATE:
+        return DeletedResponse.fromJson(response.data);
     }
   }
 
