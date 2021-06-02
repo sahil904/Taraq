@@ -199,7 +199,7 @@ class _ClientsWidgetState extends State<ClientsWidget> {
                                       ),
                                       TransparentInkWell(
                                         onTap: () {
-                                          _clientBloc.deleteClientListRequest(list.id);
+                                          projectPopup(context, list.id);
                                         },
                                         child: Icon(
                                           Icons.delete,
@@ -236,4 +236,39 @@ class _ClientsWidgetState extends State<ClientsWidget> {
 
     _clientBloc.clientListRequest();
   }
+  projectPopup(BuildContext context, int id) {
+    return showDialog(
+      context: context,
+      //barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Are you sure to delete this client",
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "No",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Yes",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+               // Utils.showLoader(context);
+                _clientBloc.deleteClientListRequest(id);
+
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
 }

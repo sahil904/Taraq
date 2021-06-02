@@ -181,7 +181,7 @@ class _OperationsWidgetState extends State<OperationsWidget> {
                                       ),
                                       TransparentInkWell(
                                         onTap: () {
-                                          _operationBloc.deleteOperationListRequest(list.id);
+                                          projectPopup(context, list.id);
                                         },
                                         child: Icon(
                                           Icons.delete,
@@ -217,4 +217,39 @@ class _OperationsWidgetState extends State<OperationsWidget> {
         Utils.hideLoader();
     });
   }
+  projectPopup(BuildContext context, int addressId) {
+    return showDialog(
+      context: context,
+      //barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Are you sure to delete this operation",
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "No",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Yes",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+
+                _operationBloc.deleteOperationListRequest(addressId);
+
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
 }

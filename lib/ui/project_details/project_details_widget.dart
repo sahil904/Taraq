@@ -24,12 +24,8 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
     super.initState();
     projectBloc = new ProjectBloc(context);
 
-    projectBloc.onProjectDeleteSuccess.listen((isLoading) {
-      if (isLoading.status) {
-        Utils.showLoader(context);
-        Navigator.pop(context);
-      } else
-        Utils.hideLoader();
+    projectBloc.onProjectListSuccess.listen((isLoading) {
+      Navigator.pop(context);
     });
   }
 
@@ -73,7 +69,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddTransactionWidget(),
+              builder: (context) => AddTransactionWidget(widget.id),
             ),
           );
         },
@@ -834,7 +830,6 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                Utils.showLoader(context);
                  projectBloc.deleteProjectRequest(addressId);
               },
             )

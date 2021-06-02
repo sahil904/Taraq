@@ -313,6 +313,7 @@ class APIController {
     }
   }
 
+
   Future<dynamic> requestCreateProject(
       ProjectRepository _repository, String name, File photo) async {
     final String url = '${KApiEndPoints.API_PROJECT_LIST}';
@@ -342,5 +343,30 @@ class APIController {
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_PROJECT_DELETE, _handleError(e));
     }
+  }
+    Future<dynamic> transcationRequest(
+        ProjectRepository _repository,int projectId,String clientId,String operationId,String price,
+        String date,String notes
+        ) async {
+      FormData formData = new FormData.fromMap({
+        'project_id': projectId,
+        'client_id': clientId,
+        'operation_id': operationId,
+        'price': price,
+        'date': date,
+        'notes': notes,
+
+      });
+      try {
+        final Response response = await _dio.get(
+          KApiEndPoints.API_TRANSACTION,
+
+          //HttpHeaders.authorizationHeader: "Bearer $token"
+        );
+        return _repository.onSuccess(KApiEndPoints.API_TRANSACTION, response);
+      } on DioError catch (e) {
+        return _repository.onError(KApiEndPoints.API_TRANSACTION, _handleError(e));
+      }
+
   }
 }

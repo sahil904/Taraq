@@ -6,6 +6,7 @@ import 'package:test/model/client_list_response.dart';
 import 'package:test/model/delete_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
+import 'package:test/model/transcation_add_response.dart';
 import 'package:test/repositry/project_repository.dart';
 
 import '../base/base_bloc.dart';
@@ -19,11 +20,13 @@ class ProjectBloc extends BaseBloc {
   final _deleteLoader = BehaviorSubject<bool>();
   final _onClientListSuccessBS = BehaviorSubject<List<DataProject>>();
   final _onClientAddSuccessBS = BehaviorSubject<ProjectAddResponse>();
+  final _onTransactionAddSuccessBS = BehaviorSubject<TranscationResponse>();
   final _onProjectDeleteSuccessBS = BehaviorSubject<DeletedResponse>();
 
   Stream<List<DataProject>> get onProjectListSuccess => _onClientListSuccessBS.stream;
 
   Stream<ProjectAddResponse> get onProjectAddSuccess => _onClientAddSuccessBS.stream;
+  Stream<TranscationResponse> get onTransactionAddSuccess => _onTransactionAddSuccessBS.stream;
   Stream<DeletedResponse> get onProjectDeleteSuccess => _onProjectDeleteSuccessBS.stream;
 
   Stream<bool> get onDeleteLoader => _deleteLoader.stream;
@@ -38,6 +41,9 @@ class ProjectBloc extends BaseBloc {
   @override
   void onDispose() {
     compositeSubscription.clear();
+    _onClientListSuccessBS.close();
+    _onClientAddSuccessBS.close();
+    _onProjectDeleteSuccessBS.close();
     super.onDispose();
   }
 
@@ -45,14 +51,16 @@ class ProjectBloc extends BaseBloc {
     _deleteLoader.add(true);
     compositeSubscription
         .add(_projectRepository.deleteProjectRequest(addressId).listen((response) {
-      _deleteLoader.add(false);
-      if (response is DeletedResponse) {
+     // _deleteLoader.add(false);
+      if (response is ProjectListResponse) {
         //  updateAddressList(response.data, false);
-     //   final int index = addressList.indexWhere((element) => element.id == addressId);
-       // addressList.removeAt(index);
-        _onProjectDeleteSuccessBS.add(response);
+      // final int index = addressList.indexWhere((element) => element.id == addressId);
+      //  addressList.removeAt(index);
+        //_onProjectDeleteSuccessBS.add(response);
+print("onDeleteLoader"+"sucess");
+        _onClientListSuccessBS.add(addressList);
       } else {
-        _onProjectDeleteSuccessBS.addError(response);
+        _onClientListSuccessBS.addError(response);
       }
     }));
   }
@@ -77,6 +85,21 @@ class ProjectBloc extends BaseBloc {
         _onClientListSuccessBS.add(addressList);
       } else {
         _onClientListSuccessBS.addError(response);
+      }
+    }));
+  }
+
+  void transcationRequest(int projectId,String clientId,String operationId,String price,
+      String date,String notes) {
+    isLoadingBS.add(true);
+    compositeSubscription.add(_projectRepository.transcationRequest(projectId,clientId,
+      operationId,price,date,notes).listen(
+            (response) {
+      isLoadingBS.add(false);
+      if (response is TranscationResponse) {
+        _onTransactionAddSuccessBS.add(response);
+      } else {
+        _onTransactionAddSuccessBS.addError(response);
       }
     }));
   }

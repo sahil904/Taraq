@@ -36,9 +36,10 @@ class KApiEndPoints {
   static const API_CREATE_CLIENT = 'client_add';
   static const API_CLIENT_UPDATE = 'client_update';
 
+  static const API_TRANSACTION = 'transaction';
   static const API_PROJECT_LIST = 'project';
   static const API_PROJECT_CREATE = 'project_add';
-  static const API_PROJECT_DELETE = 'project_delet';
+  static const API_PROJECT_DELETE = 'project_delete';
 }
 
 class KDateFormats {
