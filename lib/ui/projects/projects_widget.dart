@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:test/bloc/project_bloc.dart';
 import 'package:test/model/project_list_response.dart';
 import 'package:test/ui/common/common_widgets.dart';
+import 'package:test/utils/constants.dart';
 import 'package:test/utils/utils.dart';
 
 import '../add_project/add_project_widget.dart';
@@ -126,7 +127,7 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CachedNetworkImage(
-                  imageUrl: list.image,
+                  imageUrl: KApiBase.BASE_URL_IMAGE+list.image,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,

@@ -103,100 +103,90 @@ class _OperationsWidgetState extends State<OperationsWidget> {
 
   operationList(DataOpertaion list) {
     return
-      Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.tertiaryColor,
+          border: Border.all(
+            color: Color(0xFFC8CED5),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.tertiaryColor,
-                border: Border.all(
-                  color: Color(0xFFC8CED5),
-                  width: 1,
-                ),
-              ),
-              child: Row(
+            Expanded(
+              child: Column(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment(0, 0),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  Align(
+                    alignment: Alignment(0, 0),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 0,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                            ),
+                          ),
+                          Text(
+                            list.clientName,
+                            style: FlutterFlowTheme.title2.override(
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                InkWell(
+                                  onTap: ()  {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditPageWidget(
+                                          clientName: list.clientName, clientId: list.id,typeAdd:'Opertional' ,),
+                                      ),
+                                    ).whenComplete(() => initobersers());
+                                  },
+                                  child: FaIcon(
+                                    FontAwesomeIcons.edit,
+                                    color: Color(0xFF95A1AC),
+                                    size: 20,
+                                  ),
+                                ),
                                 Container(
-                                  width: 0,
-                                  height: 10,
+                                  width: 20,
+                                  height: 0,
                                   decoration: BoxDecoration(
                                     color: Color(0xFFEEEEEE),
                                   ),
                                 ),
-                                Text(
-                                  list.clientName,
-                                  style: FlutterFlowTheme.title2.override(
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: ()  {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => EditPageWidget(
-                                                clientName: list.clientName, clientId: list.id,typeAdd:'Opertional' ,),
-                                            ),
-                                          ).whenComplete(() => initobersers());
-                                        },
-                                        child: FaIcon(
-                                          FontAwesomeIcons.edit,
-                                          color: Color(0xFF95A1AC),
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 20,
-                                        height: 0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFEEEEEE),
-                                        ),
-                                      ),
-                                      TransparentInkWell(
-                                        onTap: () {
-                                          projectPopup(context, list.id);
-                                        },
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Color(0xFF95A1AC),
-                                          size: 25,
-                                        ),
-                                      )
-                                    ],
+                                TransparentInkWell(
+                                  onTap: () {
+                                    projectPopup(context, list.id);
+                                  },
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Color(0xFF95A1AC),
+                                    size: 25,
                                   ),
                                 )
                               ],
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -204,8 +194,7 @@ class _OperationsWidgetState extends State<OperationsWidget> {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 
   initobersers() {

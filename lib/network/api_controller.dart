@@ -304,8 +304,6 @@ class APIController {
     try {
       final Response response = await _dio.get(
         KApiEndPoints.API_PROJECT_LIST,
-
-        //HttpHeaders.authorizationHeader: "Bearer $token"
       );
       return _repository.onSuccess(KApiEndPoints.API_PROJECT_LIST, response);
     } on DioError catch (e) {
@@ -313,6 +311,26 @@ class APIController {
     }
   }
 
+  Future<dynamic> dashboardRequest(
+    ProjectRepository _repository,
+  ) async {
+    try {
+      final Response response = await _dio.get(KApiEndPoints.API_DASHBOARD);
+      return _repository.onSuccess(KApiEndPoints.API_DASHBOARD, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_DASHBOARD, _handleError(e));
+    }
+  }
+
+  Future<dynamic> projectDetailsRequest(ProjectRepository _repository, String id) async {
+    final String url = '${KApiEndPoints.API_TRANSACTION_DETAILS}/$id';
+    try {
+      final Response response = await _dio.get(url);
+      return _repository.onSuccess(KApiEndPoints.API_TRANSACTION_DETAILS, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_TRANSACTION_DETAILS, _handleError(e));
+    }
+  }
 
   Future<dynamic> requestCreateProject(
       ProjectRepository _repository, String name, File photo) async {
@@ -344,29 +362,26 @@ class APIController {
       return _repository.onError(KApiEndPoints.API_PROJECT_DELETE, _handleError(e));
     }
   }
-    Future<dynamic> transcationRequest(
-        ProjectRepository _repository,int projectId,String clientId,String operationId,String price,
-        String date,String notes
-        ) async {
-      FormData formData = new FormData.fromMap({
-        'project_id': projectId,
-        'client_id': clientId,
-        'operation_id': operationId,
-        'price': price,
-        'date': date,
-        'notes': notes,
 
-      });
-      try {
-        final Response response = await _dio.get(
-          KApiEndPoints.API_TRANSACTION,
+  Future<dynamic> transcationRequest(ProjectRepository _repository, int projectId, String clientId,
+      String operationId, String price, String date, String notes) async {
+    FormData formData = new FormData.fromMap({
+      'project_id': projectId,
+      'client_id': clientId,
+      'operation_id': operationId,
+      'price': price,
+      'date': date,
+      'notes': notes,
+    });
+    try {
+      final Response response = await _dio.get(
+        KApiEndPoints.API_TRANSACTION,
 
-          //HttpHeaders.authorizationHeader: "Bearer $token"
-        );
-        return _repository.onSuccess(KApiEndPoints.API_TRANSACTION, response);
-      } on DioError catch (e) {
-        return _repository.onError(KApiEndPoints.API_TRANSACTION, _handleError(e));
-      }
-
+        //HttpHeaders.authorizationHeader: "Bearer $token"
+      );
+      return _repository.onSuccess(KApiEndPoints.API_TRANSACTION, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_TRANSACTION, _handleError(e));
+    }
   }
 }

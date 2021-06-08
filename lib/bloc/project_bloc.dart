@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:test/model/client_list_response.dart';
+import 'package:test/model/dashboard_response.dart';
 import 'package:test/model/delete_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
@@ -22,12 +23,19 @@ class ProjectBloc extends BaseBloc {
   final _onClientAddSuccessBS = BehaviorSubject<ProjectAddResponse>();
   final _onTransactionAddSuccessBS = BehaviorSubject<TranscationResponse>();
   final _onProjectDeleteSuccessBS = BehaviorSubject<DeletedResponse>();
+  final _onDashboardSuccessBS = BehaviorSubject<DashboardResponse>();
+  final _onProjectDetailsSuccessBS = BehaviorSubject<DashboardResponse>();
 
   Stream<List<DataProject>> get onProjectListSuccess => _onClientListSuccessBS.stream;
 
   Stream<ProjectAddResponse> get onProjectAddSuccess => _onClientAddSuccessBS.stream;
+
   Stream<TranscationResponse> get onTransactionAddSuccess => _onTransactionAddSuccessBS.stream;
+
   Stream<DeletedResponse> get onProjectDeleteSuccess => _onProjectDeleteSuccessBS.stream;
+
+  Stream<DashboardResponse> get onDashboardSuccess => _onDashboardSuccessBS.stream;
+  Stream<DashboardResponse> get onProjectDetailsSuccess => _onProjectDetailsSuccessBS.stream;
 
   Stream<bool> get onDeleteLoader => _deleteLoader.stream;
 
@@ -49,15 +57,14 @@ class ProjectBloc extends BaseBloc {
 
   void deleteProjectRequest(int addressId) {
     _deleteLoader.add(true);
-    compositeSubscription
-        .add(_projectRepository.deleteProjectRequest(addressId).listen((response) {
-     // _deleteLoader.add(false);
+    compositeSubscription.add(_projectRepository.deleteProjectRequest(addressId).listen((response) {
+      // _deleteLoader.add(false);
       if (response is ProjectListResponse) {
         //  updateAddressList(response.data, false);
-      // final int index = addressList.indexWhere((element) => element.id == addressId);
-      //  addressList.removeAt(index);
+        // final int index = addressList.indexWhere((element) => element.id == addressId);
+        //  addressList.removeAt(index);
         //_onProjectDeleteSuccessBS.add(response);
-print("onDeleteLoader"+"sucess");
+        print("onDeleteLoader" + "sucess");
         _onClientListSuccessBS.add(addressList);
       } else {
         _onClientListSuccessBS.addError(response);
@@ -89,12 +96,12 @@ print("onDeleteLoader"+"sucess");
     }));
   }
 
-  void transcationRequest(int projectId,String clientId,String operationId,String price,
-      String date,String notes) {
+  void transcationRequest(
+      int projectId, String clientId, String operationId, String price, String date, String notes) {
     isLoadingBS.add(true);
-    compositeSubscription.add(_projectRepository.transcationRequest(projectId,clientId,
-      operationId,price,date,notes).listen(
-            (response) {
+    compositeSubscription.add(_projectRepository
+        .transcationRequest(projectId, clientId, operationId, price, date, notes)
+        .listen((response) {
       isLoadingBS.add(false);
       if (response is TranscationResponse) {
         _onTransactionAddSuccessBS.add(response);
@@ -104,9 +111,33 @@ print("onDeleteLoader"+"sucess");
     }));
   }
 
+  void dashboardRequest() {
+    isLoadingBS.add(true);
+    compositeSubscription.add(_projectRepository.dashboardRequest().listen((response) {
+      isLoadingBS.add(false);
+      if (response is DashboardResponse) {
+        _onDashboardSuccessBS.add(response);
+      } else {
+        _onDashboardSuccessBS.addError(response);
+      }
+    }));
+  }
+  void projectDetailsRequest(String id) {
+    isLoadingBS.add(true);
+    compositeSubscription.add(_projectRepository.projectDetailsRequest(id).listen((response) {
+      isLoadingBS.add(false);
+      if (response is DashboardResponse) {
+        _onProjectDetailsSuccessBS.add(response);
+      } else {
+        _onProjectDetailsSuccessBS.addError(response);
+      }
+    }));
+  }
+
   void requestCreateProject(String name, File imageFile) {
     isLoadingBS.add(true);
-    compositeSubscription.add(_projectRepository.requestCreateProject(name,imageFile).listen((response) {
+    compositeSubscription
+        .add(_projectRepository.requestCreateProject(name, imageFile).listen((response) {
       isLoadingBS.add(false);
       if (response is ProjectAddResponse) {
         if (addressList != null)

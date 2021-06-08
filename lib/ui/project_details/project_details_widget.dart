@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test/bloc/project_bloc.dart';
+import 'package:test/model/dashboard_response.dart';
 import 'package:test/ui/add_transaction/add_transaction_widget.dart';
+import 'package:test/ui/common/common_widgets.dart';
 import 'package:test/ui/flutter_flow/flutter_flow_theme.dart';
 import 'package:test/utils/utils.dart';
 
@@ -23,7 +25,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
   void initState() {
     super.initState();
     projectBloc = new ProjectBloc(context);
-
+    projectBloc.projectDetailsRequest(widget.id.toString());
     projectBloc.onProjectListSuccess.listen((isLoading) {
       Navigator.pop(context);
     });
@@ -81,728 +83,326 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           size: 28,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
+      body: SafeArea(child: streamWidget()),
+    );
+  }
+
+  streamWidget() {
+    return StreamBuilder<DashboardResponse>(
+      stream: projectBloc.onProjectDetailsSuccess,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Utils().somethingWentWrong();
+        if (snapshot.hasData) {
+          if (snapshot.data != null) {
+            // if (snapshot.data.LoginStatusCheck == "Active") {
+            List<Client> clientList = snapshot.data.clients;
+            List<Operation> opertaionList = snapshot.data.operations;
+            List<Transaction> transactionsList = snapshot.data.transactions;
+            if (clientList.isEmpty && clientList.isEmpty && clientList.isEmpty)
+              return Utils().noItemInCartList();
+            else
+              return SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'الاجراءات',
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: Color(0xFF653CE0),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GridView(
-                      padding: EdgeInsets.zero,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1,
-                      ),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'ايداع',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2.override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                  child: AutoSizeText(
-                                    '\$3,205.02',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.title2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF653CE0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                    if (clientList.isNotEmpty)
+                      Center(
+                        child: Text(
+                          'العملاء',
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: Color(0xFF653CE0),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'سحب',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2.override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                  child: AutoSizeText(
-                                    '\$3,205.02',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.title2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF653CE0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'نقل',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2.override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                  child: AutoSizeText(
-                                    '\$3,205.02',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.title2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF653CE0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Divider(
-                      thickness: 1,
-                      indent: 30,
-                      endIndent: 30,
-                      color: Color(0xFFBEA4E9),
-                    ),
-                    Text(
-                      'العملاء',
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: Color(0xFF653CE0),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    GridView(
-                      padding: EdgeInsets.zero,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1,
-                      ),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                  child: Row(
+                    if (clientList.isNotEmpty)
+                      Container(
+                        height: 130,
+                        margin: EdgeInsets.only(left: 20),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: clientList.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              width: 130,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
+                                child: Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  color: Color(0xFFF5F5F5),
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          'طارق',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2.override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                clientList[index].clientName,
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.bodyText2.override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                  child: AutoSizeText(
-                                    '\$3,205.02',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.title2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF653CE0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'حيدر',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText2.override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                  child: AutoSizeText(
-                                    '\$3,205.02',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.title2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF653CE0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Divider(
-                      thickness: 1,
-                      indent: 30,
-                      endIndent: 30,
-                      color: Color(0xFFBEA4E9),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16, 8, 0, 12),
-                          child: Text(
-                            'هذا الشهر',
-                            style: FlutterFlowTheme.bodyText2.override(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            border: Border.all(
-                              color: Color(0xFFC8CED5),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
                                       ),
-                                      child: Image.asset(
-                                        'assets/images/debit.svg',
-                                      ),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                        child: AutoSizeText(
+                                          clientList[index].count.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.title2.override(
+                                            fontFamily: 'Poppins',
+                                            color: Color(0xFF653CE0),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Expanded(
-                                child: Column(
+                            );
+                          },
+                        ),
+                      ),
+                    if (clientList.isNotEmpty)
+                      Divider(
+                        thickness: 1,
+                        indent: 30,
+                        endIndent: 30,
+                        color: Color(0xFFBEA4E9),
+                      ),
+                    if (opertaionList.isNotEmpty)
+                      Center(
+                        child: Text(
+                          'العملاء',
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: Color(0xFF653CE0),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    if (opertaionList.isNotEmpty)
+                      Container(
+                        height: 130,
+                        margin: EdgeInsets.only(left: 20),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: opertaionList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            // _updateProductQuantity(String text) {
+                            //   var value = widget.newProducts[index].productSize[0].sizes;
+                            //   valueChangeProductSize.value = value;
+                            // }
+
+                            // listIndex == index
+                            //     ? value
+                            //     : widget.newProducts[index]
+                            //     .productSize[0]
+                            //     .sizes
+
+                            return Container(
+                              width: 130,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
+                                child: Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  color: Color(0xFFF5F5F5),
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                opertaionList[index].operationName,
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.bodyText2.override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                        child: AutoSizeText(
+                                          opertaionList[index].count.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.title2.override(
+                                            fontFamily: 'Poppins',
+                                            color: Color(0xFF653CE0),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    if (transactionsList.isNotEmpty)
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(16, 8, 0, 12),
+                            child: Text(
+                              'هذا الشهر',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.bodyText2.override(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    if (transactionsList.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: transactionsList.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          // _updateProductQuantity(String text) {
+                          //   var value = widget.newProducts[index].productSize[0].sizes;
+                          //   valueChangeProductSize.value = value;
+                          // }
+
+                          // listIndex == index
+                          //     ? value
+                          //     : widget.newProducts[index]
+                          //     .productSize[0]
+                          //     .sizes
+
+                          return Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                  border: Border.all(
+                                    color: Color(0xFFC8CED5),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 60,
+                                            height: 60,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/debit.svg',
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                     Expanded(
-                                      child: Align(
-                                        alignment: Alignment(0.7, 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                          child: Text(
-                                            '2021-03-11',
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                              color: Color(0xFF57636C),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1.override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF15212B),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
-                                            child: Text(
-                                              'سحب',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2.override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                "\$ " + transactionsList[index].price,
+                                                style: FlutterFlowTheme.subtitle1.override(
+                                                  fontFamily: 'Poppins',
+                                                  color: Color(0xFF15212B),
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        )
-                                      ],
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                                  child: Text(
+                                                    transactionsList[index].notes,
+                                                    style: FlutterFlowTheme.bodyText2.override(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
                               )
                             ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            border: Border.all(
-                              color: Color(0xFFC8CED5),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/credit.svg',
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1.override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF15212B),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment(0.7, 0),
-                                            child: Text(
-                                              '2021-03-11',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                color: Color(0xFF57636C),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
-                                            child: Text(
-                                              'ايداع',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2.override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16, 8, 0, 12),
-                          child: Text(
-                            'ابريل 2021',
-                            style: FlutterFlowTheme.bodyText2.override(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            border: Border.all(
-                              color: Color(0xFFC8CED5),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/debit.svg',
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          '-\$360.20',
-                                          style: FlutterFlowTheme.subtitle1.override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF15212B),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment(0.7, 0),
-                                            child: Text(
-                                              '2021-03-11',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                color: Color(0xFF57636C),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
-                                            child: Text(
-                                              'سحب',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2.override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            border: Border.all(
-                              color: Color(0xFFC8CED5),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/credit.svg',
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          '+\$502.50',
-                                          style: FlutterFlowTheme.subtitle1.override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF15212B),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment(0.7, 0),
-                                            child: Text(
-                                              '2021-03-11',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                color: Color(0xFF57636C),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(0, 4, 4, 5),
-                                            child: Text(
-                                              'ايداع',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.bodyText2.override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
+                          );
+                        },
+                      ),
                   ],
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
+              );
+
+            // }
+            // else
+            //     Utils().navigateToPage(context);
+          } else {
+            return HalfLoader();
+          }
+        }
+        return HalfLoader();
+      },
     );
   }
 
@@ -830,7 +430,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                 projectBloc.deleteProjectRequest(addressId);
+                projectBloc.deleteProjectRequest(addressId);
               },
             )
           ],

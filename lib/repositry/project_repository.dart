@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test/base/base_repository.dart';
+import 'package:test/model/dashboard_response.dart';
 import 'package:test/model/delete_response.dart';
 import 'package:test/model/error_response.dart';
 import 'package:test/model/project_add_response.dart';
@@ -21,6 +22,14 @@ class ProjectRepository extends BaseRepository {
 
   Stream<dynamic> projectListRequest() {
     return Stream.fromFuture(Future.value(_apiController.projectListRequest(this)));
+  }
+
+  Stream<dynamic> dashboardRequest() {
+    return Stream.fromFuture(Future.value(_apiController.dashboardRequest(this)));
+  }
+
+  Stream<dynamic> projectDetailsRequest(String id) {
+    return Stream.fromFuture(Future.value(_apiController.projectDetailsRequest(this,id)));
   }
 
   Stream<dynamic> transcationRequest(
@@ -47,8 +56,11 @@ class ProjectRepository extends BaseRepository {
         return ProjectListResponse.fromJson(response.data);
       case KApiEndPoints.API_PROJECT_CREATE:
         return ProjectAddResponse.fromJson(response.data);
-        case KApiEndPoints.API_TRANSACTION:
+      case KApiEndPoints.API_TRANSACTION:
         return TranscationResponse.fromJson(response.data);
+      case KApiEndPoints.API_DASHBOARD:
+      case KApiEndPoints.API_TRANSACTION_DETAILS:
+        return DashboardResponse.fromJson(response.data);
     }
   }
 
@@ -60,6 +72,8 @@ class ProjectRepository extends BaseRepository {
       case KApiEndPoints.API_PROJECT_DELETE:
       case KApiEndPoints.API_PROJECT_CREATE:
       case KApiEndPoints.API_TRANSACTION:
+      case KApiEndPoints.API_DASHBOARD:
+      case KApiEndPoints.API_TRANSACTION_DETAILS:
         break;
     }
 

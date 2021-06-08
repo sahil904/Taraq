@@ -21,12 +21,15 @@ class KApiResponseCodes {
 }
 
 class KApiBase {
-  static const BASE_URL = 'https://taraqapp.herokuapp.com/api/';
+  static const BASE_URL = 'http://46.101.205.218/api/';
+  static const BASE_URL_IMAGE = 'http://46.101.205.218/';
+
 }
 
 class KApiEndPoints {
   static const API_LOGIN = 'auth/login';
   static const API_OPERATION_LIST = 'operation';
+  static const API_DASHBOARD = 'dashboard';
   static const API_OPERATION_CREATE = 'operation_add';
   static const API_OPERATION_UPDATE = 'operation_update';
   static const API_OPERATION_DELETE = 'operation_delete';
@@ -37,6 +40,7 @@ class KApiEndPoints {
   static const API_CLIENT_UPDATE = 'client_update';
 
   static const API_TRANSACTION = 'transaction';
+  static const API_TRANSACTION_DETAILS = 'transaction/count';
   static const API_PROJECT_LIST = 'project';
   static const API_PROJECT_CREATE = 'project_add';
   static const API_PROJECT_DELETE = 'project_delete';
