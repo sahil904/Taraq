@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:test/bloc/project_bloc.dart';
 import 'package:test/model/project_list_response.dart';
 import 'package:test/ui/common/common_widgets.dart';
+import 'package:test/ui/common/transparent_inkwell.dart';
 import 'package:test/utils/constants.dart';
 import 'package:test/utils/utils.dart';
 
@@ -41,7 +42,15 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
         backgroundColor: FlutterFlowTheme.primaryColor,
         title: Text(KReqHeaders.APP_NAME),
         centerTitle: true,
+        actions: [
 
+          TransparentInkWell(
+              onTap: () {
+                Utils.logout(context);
+              },
+              child: Icon(Icons.logout))
+          ,SizedBox(width: 15,)
+        ],
       ),
       backgroundColor: Color(0xFFDBE2E7),
       floatingActionButton: FloatingActionButton(
@@ -147,7 +156,7 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProjectDetailsWidget(list.id),
+                    builder: (context) => ProjectDetailsWidget(list.id,list.projectName),
                   ),
                 ).whenComplete(() => initobersers());
               },

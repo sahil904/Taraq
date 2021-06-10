@@ -48,9 +48,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
 
           TransparentInkWell(
               onTap: () {
-                logout();
+                Utils.logout(context);
               },
               child: Icon(Icons.logout))
+          ,SizedBox(width: 15,)
         ],
       ),
       body: SafeArea(child: streamWidget()),
@@ -76,7 +77,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                 children: [
                   Center(
                     child: Text(
-                      'الاجراءات',
+                      'المشاريع',
                       style: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Poppins',
                         color: Color(0xFF653CE0),
@@ -247,7 +248,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   ),
                   Center(
                     child: Text(
-                      'العملاء',
+                      'الاجراءات',
                       style: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Poppins',
                         color: Color(0xFF653CE0),
@@ -437,17 +438,5 @@ crossAxisAlignment: CrossAxisAlignment.start,
         return HalfLoader();
       },
     );
-  }
-
-  Future<void> logout() async {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginWidget(),
-      ),
-      (r) => false,
-    );
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
   }
 }

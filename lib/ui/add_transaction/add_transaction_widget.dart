@@ -28,10 +28,10 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   OperationBloc _operationBloc;
-  var operationText = 'سحب';
+  var operationText = 'يرجى اختيار الاجراء';
   var operationId;
   var clientId;
-  var clientName = 'حيدر';
+  var clientName = 'يرجى اختيار العميل';
   ClientBloc _clientBloc;
   ProjectBloc projectBloc;
 
@@ -128,10 +128,10 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40,
-                          color: Color(0x004307B1),
+                          color: FlutterFlowTheme.primaryColor,
                           textStyle: FlutterFlowTheme.subtitle2.override(
                             fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.primaryColor,
+                            color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -186,10 +186,10 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40,
-                          color: Color(0x004307B1),
+                          color: FlutterFlowTheme.primaryColor,
                           textStyle: FlutterFlowTheme.subtitle2.override(
                             fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.primaryColor,
+                            color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -238,6 +238,7 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           controller: textController1,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -319,14 +320,15 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
                           print('Button pressed ...');
                           _selectDate(context);
                         },
-                        text: selectedDate.toString(),
+                        text: selectedDate.toString()
+                            .substring(0,10),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40,
-                          color: Color(0x004307B1),
+                          color: FlutterFlowTheme.primaryColor,
                           textStyle: FlutterFlowTheme.subtitle2.override(
                             fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.primaryColor,
+                            color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),

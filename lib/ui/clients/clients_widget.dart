@@ -40,7 +40,15 @@ class _ClientsWidgetState extends State<ClientsWidget> {
         backgroundColor: FlutterFlowTheme.primaryColor,
         title: Text(KReqHeaders.APP_NAME),
         centerTitle: true,
+        actions: [
 
+          TransparentInkWell(
+              onTap: () {
+                Utils.logout(context);
+              },
+              child: Icon(Icons.logout))
+          ,SizedBox(width: 15,)
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

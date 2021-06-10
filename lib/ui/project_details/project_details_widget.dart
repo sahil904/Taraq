@@ -6,12 +6,14 @@ import 'package:test/model/dashboard_response.dart';
 import 'package:test/ui/add_transaction/add_transaction_widget.dart';
 import 'package:test/ui/common/common_widgets.dart';
 import 'package:test/ui/flutter_flow/flutter_flow_theme.dart';
+import 'package:test/ui/project_reports/project_reports_widget.dart';
 import 'package:test/utils/utils.dart';
 
 class ProjectDetailsWidget extends StatefulWidget {
   int id;
+  String projectName;
 
-  ProjectDetailsWidget(this.id, {Key key}) : super(key: key);
+  ProjectDetailsWidget(this.id,this.projectName, {Key key}) : super(key: key);
 
   @override
   _ProjectDetailsWidgetState createState() => _ProjectDetailsWidgetState();
@@ -40,7 +42,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
         iconTheme: IconThemeData(color: Colors.white),
         automaticallyImplyLeading: true,
         title: Text(
-          'مشروعي 1',
+          widget.projectName,
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: Colors.white,
@@ -60,6 +62,23 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               size: 30,
             ),
             iconSize: 30,
+          ),
+
+          IconButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectReportsWidget(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.data_usage_outlined,
+              color: Colors.white,
+              size: 25,
+            ),
+            iconSize: 25,
           )
         ],
         centerTitle: true,
@@ -192,7 +211,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                     if (opertaionList.isNotEmpty)
                       Center(
                         child: Text(
-                          'العملاء',
+                          'الاجراءات',
                           style: FlutterFlowTheme.bodyText1.override(
                             fontFamily: 'Poppins',
                             color: Color(0xFF653CE0),
@@ -324,6 +343,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
+
                                           Text(
                                             "\$ " + transactionsList[index].price,
                                             style: FlutterFlowTheme.subtitle1.override(

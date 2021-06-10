@@ -8,6 +8,7 @@ import 'package:test/custom_views/route_animations.dart';
 import 'package:test/res/app_colors.dart';
 import 'package:test/res/strings.dart';
 import 'package:test/res/styles.dart';
+import 'package:test/ui/login/login_widget.dart';
 import 'package:test/utils/constants.dart';
 import 'log.dart';
 // import 'package:connectivity/connectivity.dart';
@@ -36,6 +37,19 @@ class Utils {
   //   }
   //   return false;
   // }
+
+
+  static Future<void> logout(BuildContext context) async {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginWidget(),
+      ),
+          (r) => false,
+    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 
   static bool isEmpty(String s) {
     return !isNotEmpty(s);

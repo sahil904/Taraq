@@ -39,7 +39,15 @@ class _OperationsWidgetState extends State<OperationsWidget> {
         backgroundColor: FlutterFlowTheme.primaryColor,
         title: Text(KReqHeaders.APP_NAME),
         centerTitle: true,
+        actions: [
 
+          TransparentInkWell(
+              onTap: () {
+                Utils.logout(context);
+              },
+              child: Icon(Icons.logout))
+          ,SizedBox(width: 15,)
+        ],
       ),
       backgroundColor: Color(0xFFDBE2E7),
       floatingActionButton: FloatingActionButton(
