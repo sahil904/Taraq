@@ -167,4 +167,19 @@ class ProjectBloc extends BaseBloc {
       }
     }));
   }*/
+
+  void reportRequest(
+      int projectId, String clientId, String operationId, String startDate, String date, ) {
+    isLoadingBS.add(true);
+    compositeSubscription.add(_projectRepository
+        .reportRequest(projectId, clientId, operationId, startDate, date)
+        .listen((response) {
+      isLoadingBS.add(false);
+      if (response is TranscationResponse) {
+        _onTransactionAddSuccessBS.add(response);
+      } else {
+        _onTransactionAddSuccessBS.addError(response);
+      }
+    }));
+  }
 }

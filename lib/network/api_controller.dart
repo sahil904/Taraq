@@ -374,14 +374,25 @@ class APIController {
       'notes': notes,
     });
     try {
-      final Response response = await _dio.get(
-        KApiEndPoints.API_TRANSACTION,
-
-        //HttpHeaders.authorizationHeader: "Bearer $token"
-      );
+      final Response response = await _dio.post(KApiEndPoints.API_TRANSACTION, data: formData
+          //HttpHeaders.authorizationHeader: "Bearer $token"
+          );
       return _repository.onSuccess(KApiEndPoints.API_TRANSACTION, response);
     } on DioError catch (e) {
       return _repository.onError(KApiEndPoints.API_TRANSACTION, _handleError(e));
+    }
+  }
+  Future<dynamic> reportRequest(ProjectRepository _repository, int projectId, String clientId,
+      String operationId, String startDate, String date, ) async {
+    final String url = '${KApiEndPoints
+        .API_REPORT_CREATE}/$projectId/$operationId/$clientId/$startDate/$date';
+    try {
+      final Response response = await _dio.get(url
+          //HttpHeaders.authorizationHeader: "Bearer $token"
+          );
+      return _repository.onSuccess(KApiEndPoints.API_REPORT_CREATE, response);
+    } on DioError catch (e) {
+      return _repository.onError(KApiEndPoints.API_REPORT_CREATE, _handleError(e));
     }
   }
 }

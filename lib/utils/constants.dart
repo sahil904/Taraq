@@ -43,6 +43,7 @@ class KApiEndPoints {
 
   static const API_TRANSACTION = 'transaction';
   static const API_TRANSACTION_DETAILS = 'transaction/count';
+  static const API_REPORT_CREATE= 'transaction/report/byall';
   static const API_PROJECT_LIST = 'project';
   static const API_PROJECT_CREATE = 'project_add';
   static const API_PROJECT_DELETE = 'project_delete';

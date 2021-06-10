@@ -69,7 +69,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProjectReportsWidget(),
+                  builder: (context) => ProjectReportsWidget(widget.id),
                 ),
               );
             },
