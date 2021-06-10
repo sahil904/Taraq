@@ -142,7 +142,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                     child: AutoSizeText(
-                                      projectsList[index].count.toString(),
+                                      "${projectsList[index].count.toString()} : عدد العمليات  ",
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.title2.override(
                                         fontFamily: 'Poppins',
@@ -184,7 +184,6 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: clientList.length,
-                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: 130,
@@ -222,7 +221,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                     child: AutoSizeText(
-                                      clientList[index].count.toString(),
+                                      "${clientList[index].count.toString()} : عدد العمليات  ",
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.title2.override(
                                         fontFamily: 'Poppins',
@@ -263,7 +262,6 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      physics: NeverScrollableScrollPhysics(),
                       itemCount: opertaionList.length,
                       itemBuilder: (BuildContext context, int index) {
                         // _updateProductQuantity(String text) {
@@ -302,12 +300,25 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.bodyText2.override(
                                               fontFamily: 'Poppins',
-                                              fontSize: 18,
+                                              fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         )
                                       ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                    child: AutoSizeText(
+                                      "${opertaionList[index].count.toString()} : عدد العمليات  ",
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.title2.override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF653CE0),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -390,7 +401,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                   Padding(
                                   padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                   child: Text(
-                                    transactionsList[index].clientName,
+                                    "${transactionsList[index].clientName} : العميل  ",
                                     style: FlutterFlowTheme.bodyText2.override(
                                       fontFamily: 'Poppins',
                                       fontSize: 12,
@@ -399,7 +410,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                 ),      Padding(
                                   padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                   child: Text(
-                                    transactionsList[index].projectName,
+                                    "${transactionsList[index].projectName} : المشروع  ",
                                     style: FlutterFlowTheme.bodyText2.override(
                                       fontFamily: 'Poppins',
                                       fontSize: 12,
@@ -409,7 +420,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
                                   child: Text(
-                                    transactionsList[index].notes,
+                                    "${transactionsList[index].operationName} : الاجراء  ",
                                     style: FlutterFlowTheme.bodyText2.override(
                                       fontFamily: 'Poppins',
                                       fontSize: 12,

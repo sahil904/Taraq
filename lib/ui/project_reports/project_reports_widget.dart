@@ -153,10 +153,10 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 40,
-                              color: Color(0x004307B1),
+                              color: FlutterFlowTheme.primaryColor,
                               textStyle: FlutterFlowTheme.subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
+                                color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -212,10 +212,10 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 40,
-                              color: Color(0x004307B1),
+                              color: FlutterFlowTheme.primaryColor,
                               textStyle: FlutterFlowTheme.subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
+                                color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -270,10 +270,10 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 40,
-                              color: Color(0x004307B1),
+                              color: FlutterFlowTheme.primaryColor,
                               textStyle: FlutterFlowTheme.subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
+                                color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -331,10 +331,10 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 40,
-                        color: Color(0x004307B1),
+                        color: FlutterFlowTheme.primaryColor,
                         textStyle: FlutterFlowTheme.subtitle2.override(
                           fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
