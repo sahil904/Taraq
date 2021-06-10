@@ -92,7 +92,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
             MaterialPageRoute(
               builder: (context) => AddTransactionWidget(widget.id),
             ),
-          );
+          ).then((value) => {
+
+          projectBloc.projectDetailsRequest(widget.id.toString())
+
+          });
         },
         backgroundColor: FlutterFlowTheme.primaryColor,
         elevation: 8,
