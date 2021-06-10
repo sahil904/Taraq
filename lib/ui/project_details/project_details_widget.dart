@@ -258,7 +258,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                         child: AutoSizeText(
-                                          opertaionList[index].count.toString(),
+                                          "\$ " +  opertaionList[index].price,
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.title2.override(
                                             fontFamily: 'Poppins',
@@ -294,101 +294,82 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                         ],
                       ),
                     if (transactionsList.isNotEmpty)
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: transactionsList.length,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          // _updateProductQuantity(String text) {
-                          //   var value = widget.newProducts[index].productSize[0].sizes;
-                          //   valueChangeProductSize.value = value;
-                          // }
+                      Container(
+                        color: Color(0xFFEEEEEE),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: transactionsList.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            // _updateProductQuantity(String text) {
+                            //   var value = widget.newProducts[index].productSize[0].sizes;
+                            //   valueChangeProductSize.value = value;
+                            // }
 
-                          // listIndex == index
-                          //     ? value
-                          //     : widget.newProducts[index]
-                          //     .productSize[0]
-                          //     .sizes
+                            // listIndex == index
+                            //     ? value
+                            //     : widget.newProducts[index]
+                            //     .productSize[0]
+                            //     .sizes
 
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                  border: Border.all(
-                                    color: Color(0xFFC8CED5),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
+                            return Container(
+                              margin:  EdgeInsets.fromLTRB(15, 0, 0, 10),
+
+                              child: Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                      child: Column(
+                                    Container(
+                                      child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            width: 60,
-                                            height: 60,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
+                                          Text(
+                                            "\$ " + transactionsList[index].price,
+                                            style: FlutterFlowTheme.subtitle1.override(
+                                              fontFamily: 'Poppins',
+                                              color: Color(0xFF15212B),
                                             ),
-                                            child: Image.asset(
-                                              'assets/images/debit.svg',
-                                            ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                "\$ " + transactionsList[index].price,
-                                                style: FlutterFlowTheme.subtitle1.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: Color(0xFF15212B),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
-                                                  child: Text(
-                                                    transactionsList[index].notes,
-                                                    style: FlutterFlowTheme.bodyText2.override(
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                      child: Text(
+                                        transactionsList[index].clientName,
+                                        style: FlutterFlowTheme.bodyText2.override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    )
+                                    ),      Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                      child: Text(
+                                        transactionsList[index].projectName,
+                                        style: FlutterFlowTheme.bodyText2.override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                      child: Text(
+                                        transactionsList[index].notes,
+                                        style: FlutterFlowTheme.bodyText2.override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    Divider()
                                   ],
                                 ),
-                              )
-                            ],
-                          );
-                        },
+                              ),
+                            );
+                          },
+                        ),
                       ),
                   ],
                 ),

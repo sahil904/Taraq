@@ -11,6 +11,8 @@ class KGlobal {
 }
 
 class KReqHeaders {
+  static const APP_NAME = 'Tarq app';
+
   static const AUTHORIZATION = 'Token';
   static const DEVICE_TYPE = 'device_type';
   static const PLATFORM = 'Platform';

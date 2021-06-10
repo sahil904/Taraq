@@ -37,6 +37,12 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        title: Text(KReqHeaders.APP_NAME),
+        centerTitle: true,
+
+      ),
       backgroundColor: Color(0xFFDBE2E7),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

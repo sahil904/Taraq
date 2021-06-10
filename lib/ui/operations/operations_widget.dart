@@ -3,6 +3,7 @@ import 'package:test/model/opertaion_list_response.dart';
 import 'package:test/ui/common/common_widgets.dart';
 
 import 'package:test/ui/common/transparent_inkwell.dart';
+import 'package:test/utils/constants.dart';
 import 'package:test/utils/utils.dart';
 
 import '../add_page/add_page_widget.dart';
@@ -34,6 +35,12 @@ class _OperationsWidgetState extends State<OperationsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        title: Text(KReqHeaders.APP_NAME),
+        centerTitle: true,
+
+      ),
       backgroundColor: Color(0xFFDBE2E7),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

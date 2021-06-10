@@ -2,6 +2,7 @@ import 'package:test/bloc/client_bloc.dart';
 import 'package:test/model/client_list_response.dart';
 import 'package:test/ui/common/common_widgets.dart';
 import 'package:test/ui/common/transparent_inkwell.dart';
+import 'package:test/utils/constants.dart';
 import 'package:test/utils/utils.dart';
 
 import '../add_page/add_page_widget.dart';
@@ -35,6 +36,12 @@ class _ClientsWidgetState extends State<ClientsWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFDBE2E7),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        title: Text(KReqHeaders.APP_NAME),
+        centerTitle: true,
+
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.push(
