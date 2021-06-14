@@ -60,7 +60,7 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
       Utils.hideLoader();
       if (event.isNotEmpty) setupAlertDialogClient(context, event);
     });
-    projectBloc.onTransactionAddSuccess.listen((event) {
+    projectBloc.onTransactionReportSuccessBS.listen((event) {
       if (event.status) Utils.showSuccessMessage(context, "Success");
 
 

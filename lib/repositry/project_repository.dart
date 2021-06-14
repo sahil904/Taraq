@@ -9,6 +9,7 @@ import 'package:test/model/error_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
 import 'package:test/model/transcation_add_response.dart';
+import 'package:test/model/transcation_reports_response.dart';
 import 'package:test/network/api_controller.dart';
 import 'package:test/utils/constants.dart';
 
@@ -63,8 +64,9 @@ class ProjectRepository extends BaseRepository {
       case KApiEndPoints.API_PROJECT_CREATE:
         return ProjectAddResponse.fromJson(response.data);
       case KApiEndPoints.API_TRANSACTION:
-      case KApiEndPoints.API_REPORT_CREATE:
         return TranscationResponse.fromJson(response.data);
+      case KApiEndPoints.API_REPORT_CREATE:
+        return TranscationReportResponse.fromJson(response.data);
       case KApiEndPoints.API_DASHBOARD:
       case KApiEndPoints.API_TRANSACTION_DETAILS:
 

@@ -4,30 +4,33 @@
 
 import 'dart:convert';
 
-import 'dashboard_response.dart';
+TranscationReportResponse transcationResponseFromJson(String str) => TranscationReportResponse.fromJson(json.decode(str));
 
-TranscationResponse transcationResponseFromJson(String str) => TranscationResponse.fromJson(json.decode(str));
+String transcationResponseToJson(TranscationReportResponse data) => json.encode(data.toJson());
 
-String transcationResponseToJson(TranscationResponse data) => json.encode(data.toJson());
-
-class TranscationResponse {
-    TranscationResponse({
+class TranscationReportResponse {
+    TranscationReportResponse({
         this.status,
         this.message,
+        this.data,
+
     });
 
     bool status;
     int message;
+    List<Data> data;
 
-    factory TranscationResponse.fromJson(Map<String, dynamic> json) => TranscationResponse(
+    factory TranscationReportResponse.fromJson(Map<String, dynamic> json) => TranscationReportResponse(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
+        data: json["data"] == null ? null : List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
 
     );
 
     Map<String, dynamic> toJson() => {
         "status": status == null ? null : status,
         "message": message == null ? null : message,
+        "data": data == null ? null : List<dynamic>.from(data.map((x) => x.toJson())),
     };
 }
 

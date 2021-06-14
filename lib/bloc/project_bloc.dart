@@ -8,6 +8,7 @@ import 'package:test/model/delete_response.dart';
 import 'package:test/model/project_add_response.dart';
 import 'package:test/model/project_list_response.dart';
 import 'package:test/model/transcation_add_response.dart';
+import 'package:test/model/transcation_reports_response.dart';
 import 'package:test/repositry/project_repository.dart';
 
 import '../base/base_bloc.dart';
@@ -25,6 +26,7 @@ class ProjectBloc extends BaseBloc {
   final _onProjectDeleteSuccessBS = BehaviorSubject<DeletedResponse>();
   final _onDashboardSuccessBS = BehaviorSubject<DashboardResponse>();
   final _onProjectDetailsSuccessBS = BehaviorSubject<DashboardResponse>();
+  final _onTransactionReportSuccessBS = BehaviorSubject<TranscationReportResponse>();
 
   Stream<List<DataProject>> get onProjectListSuccess => _onClientListSuccessBS.stream;
 
@@ -36,6 +38,9 @@ class ProjectBloc extends BaseBloc {
 
   Stream<DashboardResponse> get onDashboardSuccess => _onDashboardSuccessBS.stream;
   Stream<DashboardResponse> get onProjectDetailsSuccess => _onProjectDetailsSuccessBS.stream;
+
+  Stream<TranscationReportResponse> get onTransactionReportSuccessBS => _onTransactionReportSuccessBS.stream;
+
 
   Stream<bool> get onDeleteLoader => _deleteLoader.stream;
 
@@ -175,10 +180,10 @@ class ProjectBloc extends BaseBloc {
         .reportRequest(projectId, clientId, operationId, startDate, date)
         .listen((response) {
       isLoadingBS.add(false);
-      if (response is TranscationResponse) {
-        _onTransactionAddSuccessBS.add(response);
+      if (response is TranscationReportResponse) {
+        _onTransactionReportSuccessBS.add(response);
       } else {
-        _onTransactionAddSuccessBS.addError(response);
+        _onTransactionReportSuccessBS.addError(response);
       }
     }));
   }
