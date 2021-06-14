@@ -3,6 +3,7 @@ import 'package:test/bloc/operation_bloc.dart';
 import 'package:test/bloc/project_bloc.dart';
 import 'package:test/model/client_list_response.dart';
 import 'package:test/model/opertaion_list_response.dart';
+import 'package:test/model/project_list_response.dart';
 import 'package:test/res/app_colors.dart';
 import 'package:test/res/styles.dart';
 import 'package:test/ui/common/transparent_inkwell.dart';
@@ -32,8 +33,8 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
   OperationBloc _operationBloc;
 
   var operationText = 'يرجى اختيار الاجراء';
-  var operationId;
-  var clientId;
+  var operationId = 0;
+  var clientId = 0;
   var clientName = 'يرجى اختيار العميل';
 
   DateTime startSelectedDate = DateTime.now();
@@ -61,10 +62,14 @@ class _ProjectReportsWidgetState extends State<ProjectReportsWidget> {
     });
     projectBloc.onTransactionAddSuccess.listen((event) {
       if (event.status) Utils.showSuccessMessage(context, "Success");
+
+
+      print(event.toJson());
+
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ReportResultWidget(),
+          builder: (context) => ReportResultWidget(event.data),
         ),
       );
     });
