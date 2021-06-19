@@ -143,7 +143,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                       ),
                     if (clientList.isNotEmpty)
                       Container(
-                        height: 130,
+                        height: 80,
                         margin: EdgeInsets.only(left: 20),
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -151,7 +151,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                           itemCount: clientList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              width: 130,
+                              width: 150,
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
                                 child: Card(
@@ -165,22 +165,17 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                clientList[index].clientName,
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.bodyText2.override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            )
-                                          ],
+                                        padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                        child: Text(
+                                          clientList[index].clientName,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: FlutterFlowTheme.bodyText2.override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -225,7 +220,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                       ),
                     if (opertaionList.isNotEmpty)
                       Container(
-                        height: 130,
+                        height: 120,
                         margin: EdgeInsets.only(left: 20),
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -244,7 +239,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                             //     .sizes
 
                             return Container(
-                              width: 130,
+                              width: 150,
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
                                 child: Card(
@@ -259,21 +254,16 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                opertaionList[index].operationName,
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.bodyText2.override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            )
-                                          ],
+                                        child: Text(
+                                          opertaionList[index].operationName,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: FlutterFlowTheme.bodyText2.override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -297,7 +287,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                                           style: FlutterFlowTheme.title2.override(
                                             fontFamily: 'Poppins',
                                             color: Color(0xFF653CE0),
-                                            fontSize: 14,
+                                            fontSize: 13,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),

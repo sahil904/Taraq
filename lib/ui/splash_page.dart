@@ -10,6 +10,7 @@ import 'package:test/utils/pref_utils.dart';
 import 'package:test/utils/utils.dart';
 
 import '../main.dart';
+import 'flutter_flow/flutter_flow_theme.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -37,21 +38,34 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Widget splashCenterWidget() {
-    return Stack(
-      children: [
-        Center(
-          child: Container(
-            color: AppColors.textPrimaryColor9,
-            child: Center(
-              child: Text(
-                "Spalsh here",
-                style: tsBoldTextWhite22,
-                textAlign: TextAlign.center,
+    return Container(
+      color: FlutterFlowTheme.primaryColor,
+      child: Center(
+        child: Column(
+
+mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "My Projects",
+              style: FlutterFlowTheme.bodyText1.override(
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
-          ),
+
+             SizedBox(height: 20,),
+
+            SizedBox(
+              child: CircularProgressIndicator(),
+              height: 30.0,
+              width: 30.0,
+
+            ),          ],
         ),
-      ],
+      ),
     );
   }
 

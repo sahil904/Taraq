@@ -88,7 +88,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 20),
-                    height: 130,
+                    height: 80,
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -107,7 +107,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                         //     .sizes
 
                         return Container(
-                          width: 130,
+                          width: 150,
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
                             child: Card(
@@ -121,26 +121,21 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            projectsList[index].projectName,
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.bodyText2.override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                    padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                                    child: Text(
+                                      projectsList[index].projectName,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FlutterFlowTheme.bodyText2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                    padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                                     child: AutoSizeText(
                                       "${projectsList[index].count.toString()} : عدد العمليات  ",
                                       textAlign: TextAlign.center,
@@ -178,7 +173,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     ),
                   ),
                   Container(
-                    height: 130,
+                    height: 80,
                     margin: EdgeInsets.only(left: 20),
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -186,7 +181,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                       itemCount: clientList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          width: 130,
+                          width: 150,
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
                             child: Card(
@@ -200,22 +195,17 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            clientList[index].clientName,
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.bodyText2.override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                    padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                                    child: Text(
+                                      clientList[index].clientName,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FlutterFlowTheme.bodyText2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -257,7 +247,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     ),
                   ),
                   Container(
-                    height: 130,
+                    height: 120,
                     margin: EdgeInsets.only(left: 20),
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -276,7 +266,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                         //     .sizes
 
                         return Container(
-                          width: 130,
+                          width: 150,
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(2, 4, 4, 4),
                             child: Card(
@@ -291,21 +281,16 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            opertaionList[index].operationName,
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.bodyText2.override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                    child: Text(
+                                      opertaionList[index].operationName,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FlutterFlowTheme.bodyText2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -326,12 +311,14 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                     child: AutoSizeText(
                                     "\$ "+  opertaionList[index].price,
                                       textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       style: FlutterFlowTheme.title2.override(
                                         fontFamily: 'Poppins',
                                         color: Color(0xFF653CE0),
-                                        fontSize: 14,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w500,
-                                      ),
+                                      )
                                     ),
                                   )
                                 ],

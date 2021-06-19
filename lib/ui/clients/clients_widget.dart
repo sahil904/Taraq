@@ -142,17 +142,7 @@ class _ClientsWidgetState extends State<ClientsWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            'assets/images/user_2@2x.png',
-                          ),
-                        )
+
                       ],
                     ),
                   ),
